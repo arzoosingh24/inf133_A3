@@ -19,7 +19,8 @@ export class SpotifyService {
     //TODO: use the injected http Service to make a get request to the Express endpoint and return the response.
     //the http service works similarly to fetch(). It may be useful to call .toPromise() on any responses.
     //update the return to instead return a Promise with the data from the Express server
-    return Promise.resolve();
+    return Promise.resolve(this.http.get(this.expressBaseUrl+endpoint).toPromise());
+    // this.http.get(this.expressBaseUrl+endpoint).toPromise()
   }
 
   aboutMe():Promise<ProfileData> {
