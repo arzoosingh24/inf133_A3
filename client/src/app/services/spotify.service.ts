@@ -19,9 +19,8 @@ export class SpotifyService {
     //TODO: use the injected http Service to make a get request to the Express endpoint and return the response.
     //the http service works similarly to fetch(). It may be useful to call .toPromise() on any responses.
     //update the return to instead return a Promise with the data from the Express server
-    var httpRequest = this.http.get(this.expressBaseUrl+endpoint).toPromise();
+    let httpRequest = this.http.get(this.expressBaseUrl+endpoint).toPromise();
     return Promise.resolve(httpRequest);
-    // this.http.get(this.expressBaseUrl+endpoint).toPromise()
   }
 
   aboutMe():Promise<ProfileData> {
@@ -32,15 +31,20 @@ export class SpotifyService {
   }
 
   searchFor(category:string, resource:string):Promise<ResourceData[]> {
-    var encodedResource = encodeURI(resource);
-    var requestString = '/search/${category}/${encodedResource}';
-    this.sendRequestToExpress(requestString).then(
+    //let resources:ResourceData[];
+    var encodedResource = encodeURIComponent(resource);
+    var requestString = '/search/' + category + "/" + encodedResource;
+    console.log(requestString);
+    return this.sendRequestToExpress(requestString).then(
       (data)=>{
+        console.log("api returned value");
         if (category == "artist"){
+          console.log("artist");
           let artistInfo:ArtistData[];
           artistInfo = data['artists']['items'].map((artist) => {
             return new ArtistData(artist);
           })
+          console.log(artistInfo);
           return artistInfo;
 
         }else if (category == "track"){
@@ -63,13 +67,13 @@ export class SpotifyService {
     //Make sure you're encoding the resource with encodeURIComponent().
     //Depending on the category (artist, track, album), return an array of that type of data.
     //JavaScript's "map" function might be useful for this, but there are other ways of building the array.
-    return null;
   }
 
   getArtist(artistId:string):Promise<ArtistData> {
     //TODO: use the artist endpoint to make a request to express.
     //Again, you may need to encode the artistId.
-    var requestString = '/artist/' + encodeURI(artistId)
+    var encodedResource = encodeURIComponent(artistId)
+    var requestString = '/artist/' + encodedResource;
     return this.sendRequestToExpress(requestString).then(
       (data)=>{
         return new ArtistData(data);

@@ -7,7 +7,7 @@ import { ResourceData } from '../../data/resource-data';
   styleUrls: ['./carousel-card.component.css']
 })
 export class CarouselCardComponent implements OnInit {
-  category:string = "unknown";
+  category:string;
 	name:string;
 	imageURL:string;
 	id:string;

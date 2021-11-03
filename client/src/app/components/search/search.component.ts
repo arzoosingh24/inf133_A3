@@ -25,7 +25,7 @@ export class SearchComponent implements OnInit {
   search() {
     console.log("search function running");
     this.spotifyService.searchFor(this.searchCategory, this.searchString).then(
-     (searchForInfo)=>{
+     searchForInfo=>{
       this.resources = searchForInfo;
     });
   }
