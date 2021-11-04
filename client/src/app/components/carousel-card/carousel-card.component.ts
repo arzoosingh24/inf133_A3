@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ResourceData } from '../../data/resource-data';
+import { ArtistPageComponent } from 'src/app/pages/artist-page/artist-page.component';
+import { AlbumPageComponent } from 'src/app/pages/album-page/album-page.component';
 
 @Component({
   selector: 'app-carousel-card',
@@ -18,11 +20,18 @@ export class CarouselCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.name = this.resource.name;
-    this.url = this.resource.url;
-    this.category = this.resource.category;
-    this.imageURL = this.resource.imageURL;
     this.id = this.resource.id;
+    this.name = this.resource.name;
+    this.category = this.resource.category;
+    if (this.category == "track"){
+      this.url = "/track/" + this.id;
+    }else if (this.category == "artist"){
+      this.url = "/artist/" + this.id;
+    }else if (this.category == "album"){
+      this.url = "/album/" + this.id;
+    }
+    console.log(this.url);
+    this.imageURL = this.resource.imageURL;
   }
 
 }
