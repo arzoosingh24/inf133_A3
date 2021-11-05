@@ -9,6 +9,7 @@ export class ThermometerComponent implements OnInit {
   //TODO: define Input fields and bind them to the template.
   @Input() name:string;
   @Input() percent:string;
+  @Input() percentString:string;
   @Input() color:string;
   constructor() { }
 

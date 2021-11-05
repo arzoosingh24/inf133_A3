@@ -28,10 +28,10 @@ export class ArtistPageComponent implements OnInit {
     //TODO: Inject the spotifyService and use it to get the artist data, related artists, top tracks for the artist, and the artist's albums
     this.spotify.getArtist(this.artistId).then((data)=>{
       this.artist = data;
-      this.name = data.name;
-      this.url = data.url;
-      this.genres = data.genres;
-      this.imageURL = data.imageURL;
+      this.name = this.artist.name;
+      this.url = this.artist.url;
+      this.genres = this.artist.genres;
+      this.imageURL = this.artist.imageURL;
     });
     this.spotify.getRelatedArtists(this.artistId).then((data)=>{
       this.relatedArtists = data;

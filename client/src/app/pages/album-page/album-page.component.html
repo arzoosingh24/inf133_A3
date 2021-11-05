@@ -7,7 +7,7 @@
 		<!--TODO: loop over album artists-->
 		<p *ngFor = "let Artist of album.artists" >
 			<!--TODO: link to artist page, display artist name-->
-			Artist: <a [href] = "artist/Artist.id">{{Artist.name}}</a>
+			Artist: <a href = "artist/{{Artist.id}}" >{{Artist.name}}</a>
 		</p>
 		<p *ngFor = "let artist of album.artists" >
 			<!--TODO: link to artist page on spotify, display artist name-->
