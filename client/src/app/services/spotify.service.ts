@@ -150,7 +150,7 @@ export class SpotifyService {
     var encodedResource = encodeURIComponent(trackId);
     var requestString = '/track-audio-features/' + encodedResource;
     return this.sendRequestToExpress(requestString).then((data) => {
-      let trackInfo:TrackFeature[]
+      let trackInfo:TrackFeature[] =[];
       trackInfo.push(new TrackFeature("acousticness", data["acousticness"]) );
       trackInfo.push(new TrackFeature("energy", data["energy"]));
       trackInfo.push(new TrackFeature("danceability", data["danceability"]));
