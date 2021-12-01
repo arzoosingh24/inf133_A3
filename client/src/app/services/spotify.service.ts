@@ -6,6 +6,7 @@ import { TrackData } from '../data/track-data';
 import { ResourceData } from '../data/resource-data';
 import { ProfileData } from '../data/profile-data';
 import { TrackFeature } from '../data/track-feature';
+import { PlaylistData } from '../data/playlist-data';
 
 @Injectable({
   providedIn: 'root'
@@ -47,14 +48,14 @@ export class SpotifyService {
           console.log(artistInfo);
           return artistInfo;
 
-        }else if (category == "track"){
+        } else if (category == "track"){
           let trackInfo:TrackData[];
           trackInfo = data['tracks']['items'].map((track) => {
             return new TrackData(track);
           })
           return trackInfo;
 
-        }else if (category == "album"){
+        } else if (category == "album"){
           let albumInfo:AlbumData[];
           albumInfo = data['albums']['items'].map((album) => {
             return new AlbumData(album);
