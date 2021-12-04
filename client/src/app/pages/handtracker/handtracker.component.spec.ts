@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HandtrackerComponent } from './pages/handtracker.component';
+import { HandtrackerComponent } from './handtracker.component';
 
 describe('HandtrackerComponent', () => {
   let component: HandtrackerComponent;

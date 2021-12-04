@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import * as handTrack from 'handtrackjs';
-import { PredictionEvent } from '../prediction-event';
+import { AppComponent } from 'src/app/app.component';
+import { PredictionEvent } from '../../prediction-event';
 
 @Component({
   selector: 'app-handtracker',
@@ -21,6 +22,7 @@ export class HandtrackerComponent implements OnInit {
   detectedGesture:string = "None"
   width:string = "400"
   height:string = "400"
+  appComponent:AppComponent;
 
   private model: any = null;
   private runInterval: any = null;
@@ -33,7 +35,8 @@ export class HandtrackerComponent implements OnInit {
     scoreThreshold: 0.6, // confidence threshold for predictions.
   };
 
-  constructor() {
+  constructor(appComponent:AppComponent) {
+    this.appComponent = appComponent
   }
   
   ngOnInit(): void{
@@ -100,7 +103,10 @@ export class HandtrackerComponent implements OnInit {
             // These are just a few options! What about one hand open and one hand closed!?
 
             if (openhands > 1) this.detectedGesture = "Two Open Hands";
-            else if(openhands == 1) this.detectedGesture = "Open Hand";
+            else if(openhands == 1) {
+              this.appComponent.login()
+              this.detectedGesture = "Open Hand";
+            }
             
             if (closedhands > 1) this.detectedGesture = "Two Closed Hands";
             else if(closedhands == 1) this.detectedGesture = "Closed Hand";

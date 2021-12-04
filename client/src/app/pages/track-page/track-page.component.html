@@ -26,6 +26,6 @@
 		<!--TODO: loop over types of features and create a thermometer component for each-->
 		<app-thermometer *ngFor = "let feature of audioFeatures" [name] = "feature.name" [percent] = "feature.percent" [percentString]="feature.percentageString" [color] = "feature.color"></app-thermometer>
 	</div>
-	<iframe [src]="trackUrlSafe | safe" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+	<iframe id="url" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 	<!-- https://developer.spotify.com/documentation/widgets/generate/embed/ -->
 </div>

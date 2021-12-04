@@ -17,6 +17,7 @@ import { ArtistPageComponent } from './pages/artist-page/artist-page.component';
 import { AlbumPageComponent } from './pages/album-page/album-page.component';
 import { TrackPageComponent } from './pages/track-page/track-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
+import { HandtrackerComponent } from './pages/handtracker/handtracker.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
     AlbumPageComponent,
     TrackPageComponent,
     TrackListComponent,
+    HandtrackerComponent,
     CarouselComponent,
     SearchComponent,
     HomePageComponent,
@@ -35,6 +37,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
   imports: [
     BrowserModule,
     HttpClientModule,
+    
     FormsModule,
     AppRoutingModule,
     SafePipeModule
