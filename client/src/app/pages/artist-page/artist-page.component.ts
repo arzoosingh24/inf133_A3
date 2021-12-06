@@ -4,6 +4,7 @@ import { ArtistData } from '../../data/artist-data';
 import { TrackData } from '../../data/track-data';
 import { AlbumData } from '../../data/album-data';
 import { SpotifyService } from 'src/app/services/spotify.service';
+import { PredictionEvent } from 'src/app/prediction-event';
 
 @Component({
   selector: 'app-artist-page',
@@ -43,5 +44,6 @@ export class ArtistPageComponent implements OnInit {
       this.albums = data;
     });
   }
+
 
 }

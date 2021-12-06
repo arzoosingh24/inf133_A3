@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { SpotifyService } from '../../services/spotify.service';
 import { ArtistData } from '../../data/artist-data';
 import { AlbumData } from '../../data/album-data';
@@ -16,18 +16,23 @@ export class SearchComponent implements OnInit {
   searchCategory:string = 'artist';
   searchCategories:string[] = ['artist', 'album', 'track'];
   resources:ResourceData[];
-
   constructor(private spotifyService:SpotifyService) { }
 
   ngOnInit() {
   }
 
-  search() {
+  public search() {
     console.log("search function running");
     this.spotifyService.searchFor(this.searchCategory, this.searchString).then(
      searchForInfo=>{
       this.resources = searchForInfo;
     });
   }
+
+  public searchGesture(){
+    console.log("Attempting to Search");
+    document.getElementById("search").click();
+  }
+
 
 }

@@ -5,3 +5,9 @@ input {
 select {
 	margin: 10px;
 }
+
+#searchComp {
+	position:relative;
+	bottom:230px;
+	left: 80px;
+}

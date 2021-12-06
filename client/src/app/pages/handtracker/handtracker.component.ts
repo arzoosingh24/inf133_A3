@@ -1,7 +1,15 @@
 import { Component, ElementRef, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import * as handTrack from 'handtrackjs';
 import { AppComponent } from 'src/app/app.component';
+import { AboutComponent } from 'src/app/components/about/about.component';
 import { PredictionEvent } from '../../prediction-event';
+import { HttpClient, HttpHandler, HttpHeaders } from '@angular/common/http';
+import { SpotifyService } from 'src/app/services/spotify.service';
+import { SearchComponent } from 'src/app/components/search/search.component';
+import { CarouselComponent } from 'src/app/components/carousel/carousel.component';
+import { ActivatedRoute } from '@angular/router';
+import { AlbumPageComponent } from '../album-page/album-page.component';
+import { ArtistPageComponent } from '../artist-page/artist-page.component';
 
 @Component({
   selector: 'app-handtracker',
@@ -23,6 +31,14 @@ export class HandtrackerComponent implements OnInit {
   width:string = "400"
   height:string = "400"
   appComponent:AppComponent;
+  aboutComponent:AboutComponent;
+  spotifyService:SpotifyService;
+  httpClient:HttpClient;
+  searchComponent:SearchComponent;
+  carousel:CarouselComponent;
+  route:ActivatedRoute;
+  albumPage:AlbumPageComponent;
+  artistPage:ArtistPageComponent;
 
   private model: any = null;
   private runInterval: any = null;
@@ -35,8 +51,17 @@ export class HandtrackerComponent implements OnInit {
     scoreThreshold: 0.6, // confidence threshold for predictions.
   };
 
-  constructor(appComponent:AppComponent) {
-    this.appComponent = appComponent
+  constructor(appComponent:AppComponent, handler: HttpHandler, route:ActivatedRoute) {
+    this.appComponent = appComponent;
+    this.httpClient = new HttpClient(handler);
+    this.spotifyService = new SpotifyService(this.httpClient);
+    this.aboutComponent = new AboutComponent(this.spotifyService);
+    this.searchComponent = new SearchComponent(this.spotifyService);
+    this.carousel = new CarouselComponent();
+    this.route = new ActivatedRoute()
+    this.albumPage = new AlbumPageComponent(this.route, this.spotifyService);
+    this.artistPage = new ArtistPageComponent(this.route, this.spotifyService);
+
   }
   
   ngOnInit(): void{
@@ -102,20 +127,44 @@ export class HandtrackerComponent implements OnInit {
 
             // These are just a few options! What about one hand open and one hand closed!?
 
-            if (openhands > 1) this.detectedGesture = "Two Open Hands";
-            else if(openhands == 1) {
+            if (openhands == 1 && closedhands == 1){
+              this.carousel.moveRight()
+              this.detectedGesture = "One Open Hand, One Closed Hand";
+            }
+            if (openhands > 1){
+              console.log("two hands should load info");
+              this.aboutComponent.loadInfo()
+              this.detectedGesture = "Two Open Hands";
+            }
+            else if(openhands == 1 && closedhands == 0) {
               this.appComponent.login()
               this.detectedGesture = "Open Hand";
             }
             
-            if (closedhands > 1) this.detectedGesture = "Two Closed Hands";
-            else if(closedhands == 1) this.detectedGesture = "Closed Hand";
+            if (closedhands > 1) {
+              this.aboutComponent.openProfile();
+              this.detectedGesture = "Two Closed Hands";
+            }
+            else if (pointing == 1 && closedhands == 1){
+              this.carousel.moveLeft()
+              this.detectedGesture = "L With Left Hand, Closed Right Hand";
+            }
+            else if(closedhands == 1 && openhands == 0) {
+              this.albumPage.openAlbumPage();
+              this.detectedGesture = "Closed Hand";
+            }
             
             if (pointing > 1) this.detectedGesture = "Two Hands Pointing";
-            else if(pointing == 1) this.detectedGesture = "Hand Pointing";
+            else if(pointing == 1 && closedhands == 0) {
+              this.searchComponent.searchGesture();
+              this.detectedGesture = "Hand Pointing";
+            }
             
             if (pinching > 1) this.detectedGesture = "Two Hands Pinching";
-            else if(pinching == 1) this.detectedGesture = "Hand Pinching";
+            else if(pinching == 1) {
+              this.detectedGesture = "Hand Pinching";
+              this.searchComponent.searchGesture();
+            }
 
             if (openhands == 0 && closedhands == 0 && pointing == 0 && pinching == 0)
                 this.detectedGesture = "None";

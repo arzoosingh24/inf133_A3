@@ -14,5 +14,12 @@ export class CarouselComponent implements OnInit {
 
   ngOnInit() {
   }
+  public moveLeft(){
+    document.getElementById("left").click();
+  }
+
+  public moveRight(){
+    document.getElementById("right").click();
+  }
 
 }
